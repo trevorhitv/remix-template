@@ -38,3 +38,17 @@ Make sure to deploy the output of `npm run build`
 ## Styling
 
 This template comes with [Tailwind CSS](https://tailwindcss.com/) already configured for a simple default starting experience. You can use whatever css framework you prefer. See the [Vite docs on css](https://vitejs.dev/guide/features.html#css) for more information.
+
+# Fly.io Deployment and Docker
+
+[Fly.io](https://fly.io/)
+
+This template deploys to fly.io which bases it deployments on Dockerfiles.
+
+The name of your docker project will inherit the name you assign in the package.json.
+
+Ex. 
+
+```sh
+"docker:build": "docker build -t ${npm_package_name} .",
+```
