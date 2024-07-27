@@ -1,13 +1,24 @@
-import type { MetaFunction } from "@remix-run/node";
+import { json } from "@remix-run/node";
+import { useLoaderData } from "@remix-run/react";
+import { db } from "../utils/database";
 
-export const meta: MetaFunction = () => {
+export const meta = () => {
   return [
     { title: "New Remix App" },
     { name: "description", content: "Welcome to Remix!" },
   ];
 };
 
+export const loader = async () => {
+  const query = db.query("select 'Hello world' as message;");
+  const message = query.get();
+
+  return json(message);
+}
+
 export default function Index() {
+  const loaderData = useLoaderData();
+
   return (
     <div className="font-sans p-4">
       <h1 className="text-3xl">Welcome to Remix</h1>
@@ -43,6 +54,7 @@ export default function Index() {
           </a>
         </li>
       </ul>
+      <p>{loaderData.message}</p>
     </div>
   );
 }
