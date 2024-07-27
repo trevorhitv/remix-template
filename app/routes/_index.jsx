@@ -1,6 +1,6 @@
 import { json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
-import { db } from "../utils/database";
+import { db } from "../db.server";
 
 export const meta = () => {
   return [
