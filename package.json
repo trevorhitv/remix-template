@@ -7,7 +7,10 @@
     "build": "bunx --bun remix vite:build",
     "dev": "bun run --bun vite",
     "lint": "eslint --ignore-path .gitignore --cache --cache-location ./node_modules/.cache/eslint .",
-    "start": "remix-serve ./build/server/index.js"
+    "start": "remix-serve ./build/server/index.js",
+    "docker:build": "docker build -t ${npm_package_name} .",
+    "docker:run": "docker run -p 3000:3000 ${npm_package_name}",
+    "docker:stop": "docker stop $(docker ps -q --filter ancestor=${npm_package_name})"
   },
   "dependencies": {
     "@remix-run/node": "^2.10.3",

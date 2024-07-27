@@ -22,6 +22,7 @@ export default function Index() {
   return (
     <div className="font-sans p-4">
       <h1 className="text-3xl">Welcome to Remix</h1>
+      <p className="font-extrabold">DB Message: {loaderData.message}</p>
       <ul className="list-disc mt-4 pl-6 space-y-2">
         <li>
           <a
@@ -54,7 +55,6 @@ export default function Index() {
           </a>
         </li>
       </ul>
-      <p>{loaderData.message}</p>
     </div>
   );
 }
