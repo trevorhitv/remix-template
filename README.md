@@ -68,3 +68,12 @@ Loader and Action Response
 const { data, errors } = useLoaderData();
 const { data, errors } = useActionData();
 ```
+
+# Getting Started
+
+`cp .env.example .env`
+
+`bun install`
+
+`bun run db:up`
+

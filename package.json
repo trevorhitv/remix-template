@@ -13,7 +13,8 @@
     "docker:stop": "docker stop $(docker ps -q --filter ancestor=${npm_package_name})",
     "db:create-migration": "dbmate new",
     "db:up": "dbmate up",
-    "db:rollback": "dbmate rollback"
+    "db:rollback": "dbmate rollback",
+    "db:status": "dbmate status"
   },
   "dependencies": {
     "@paralleldrive/cuid2": "^2.2.2",
