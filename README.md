@@ -55,6 +55,7 @@ We are going to manage the migrations using the framework agnostic [dbmate](http
 # Opionated Actions and Loaders
 
 Loader and Action Response
+
 ```JSON
 {
     data: {},
@@ -77,3 +78,6 @@ const { data, errors } = useActionData();
 
 `bun run db:up`
 
+`bun run dev`
+
+#
