@@ -10,20 +10,26 @@
     "start": "remix-serve ./build/server/index.js",
     "docker:build": "docker build -t ${npm_package_name} .",
     "docker:run": "docker run -p 3000:3000 ${npm_package_name}",
-    "docker:stop": "docker stop $(docker ps -q --filter ancestor=${npm_package_name})"
+    "docker:stop": "docker stop $(docker ps -q --filter ancestor=${npm_package_name})",
+    "db:create-migration": "dbmate new",
+    "db:up": "dbmate up",
+    "db:rollback": "dbmate rollback"
   },
   "dependencies": {
+    "@paralleldrive/cuid2": "^2.2.2",
     "@remix-run/node": "^2.10.3",
     "@remix-run/react": "^2.10.3",
     "@remix-run/serve": "^2.10.3",
     "bun": "^1.1.21",
     "isbot": "^4.1.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@remix-run/dev": "^2.10.3",
     "autoprefixer": "^10.4.19",
+    "dbmate": "^2.19.0",
     "eslint": "^8.38.0",
     "eslint-plugin-import": "^2.28.1",
     "eslint-plugin-jsx-a11y": "^6.7.1",
