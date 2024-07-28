@@ -1,8 +1,7 @@
 import { describe, it, expect, beforeEach } from "bun:test";
-import { createId } from "@paralleldrive/cuid2";
-import { clearDb } from "../testUtils.server";
-import { db } from "../../app/db.server";
-import { readAllNotes } from "../../app/lib/queries.server";
+import { clearDb } from "../testUtils";
+import { createNote } from "../../app/lib/mutations";
+import { readAllNotes } from "../../app/lib/queries";
 
 describe("lib/queries", () => {
     beforeEach(() => {
@@ -16,16 +15,8 @@ describe("lib/queries", () => {
         });
 
         it("should return all notes", () => {
-            db.prepare("INSERT INTO notes (id, title, body) VALUES (?, ?, ?)").run(
-                createId(),
-                "Hello",
-                "World",
-            );
-            db.prepare("INSERT INTO notes (id, title, body) VALUES (?, ?, ?)").run(
-                createId(),
-                "Hello",
-                "Austin",
-            );
+            createNote("Hello", "World");
+            createNote("Hello", "Austin");
             const notes = readAllNotes();
             expect(notes).toHaveLength(2);
             expect(notes[0].title).toEqual("Hello");

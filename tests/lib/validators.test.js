@@ -1,5 +1,5 @@
 import { describe, it, expect } from "bun:test";
-import { validateNoteForm } from '../../app/lib/validators.server';
+import { validateNoteForm } from '../../app/lib/validators';
 
 
 describe("lib/queries", () => {

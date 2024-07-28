@@ -1,6 +1,6 @@
 import { describe, it, expect } from "bun:test";
 import { z } from "zod";
-import { pullErrorFromZodParsing } from "../../app/utils/forms.server";
+import { pullErrorFromZodParsing } from "../../app/utils/forms";
 
 describe("utils/forms", () => {
   describe("test the pullErrorFromZodParsing util", () => {

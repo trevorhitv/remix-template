@@ -1,7 +1,8 @@
 import { describe, it, expect, beforeEach } from "bun:test";
-import { clearDb } from "../testUtils.server";
-import { db } from "../../app/db.server";
-import { createNote } from "../../app/lib/mutations.server";
+import { clearDb } from "../testUtils";
+import { db } from "../../app/db";
+import { notes } from "../../app/db/schema";
+import { createNote } from "../../app/lib/mutations";
 
 describe("lib/queries", () => {
     beforeEach(() => {
@@ -16,8 +17,7 @@ describe("lib/queries", () => {
             };
 
             createNote(newNote.title, newNote.body);
-
-            const note = db.prepare("SELECT * FROM notes").get();
+            const note = db.select().from(notes).get();
 
             expect(note.title).toEqual(newNote.title);
         });
