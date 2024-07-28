@@ -1,9 +1,9 @@
 import { json } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import { pullErrorFromZodParsing } from "../utils/forms.server";
-import { readAllNotes } from "../lib/queries.server";
-import { validateNoteForm } from "../lib/validators.server";
-import { createNote } from "../lib/mutations.server";
+import { pullErrorFromZodParsing } from "../utils/forms";
+import { readAllNotes } from "../lib/queries";
+import { validateNoteForm } from "../lib/validators";
+import { createNote } from "../lib/mutations";
 
 import NoteCard from "../components/NoteCard";
 

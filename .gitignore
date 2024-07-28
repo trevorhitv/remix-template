@@ -6,4 +6,4 @@ node_modules
 
 bun.lockb
 
-database.sqlite*
+sqlite.db*
