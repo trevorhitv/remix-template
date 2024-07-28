@@ -1,10 +1,11 @@
 import { json } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import { z } from "zod";
-import { createId } from "@paralleldrive/cuid2";
 import { pullErrorFromZodParsing } from "../utils/forms";
-import { db } from "../db.server";
-import { readAllNotes } from "../lib/queries";
+import { readAllNotes } from "../lib/queries.server";
+import { checkNoteFormData } from "../lib/validators.server";
+import { createNote } from "../lib/mutations.server";
+
+import NoteCard from "../components/NoteCard";
 
 export function meta() {
   return [
@@ -15,13 +16,11 @@ export function meta() {
 
 export async function loader() {
   const notes = readAllNotes();
-
   return json({ notes });
 }
 
 export async function action({ request }) {
   const formData = Object.fromEntries(await request.formData());
-
   const note = checkNoteFormData(formData);
 
   if (!note.success) {
@@ -30,8 +29,7 @@ export async function action({ request }) {
   }
 
   createNote(note.data.title, note.data.body);
-
-  return json({ data: { id }, errors: {} });
+  return json({ success: true }, 200);
 }
 
 export default function Index() {
@@ -41,16 +39,48 @@ export default function Index() {
   return (
     <div className="font-sans p-4">
       <h1 className="text-3xl">Bun and Remix Template</h1>
-      <p>Cliche Notes Example</p>
 
-      <Form method="post">
-        <label htmlFor="title">Title</label>
-        <input className="border" name="title" type="text" />
-        <br />
-        <label htmlFor="body">Body</label>
-        <input className="border" name="body" type="text" />
-        <br />
-        <button type="submit">Submit</button>
+      <Form className="flex flex-auto space-x-4 mt-8 " method="post">
+        <div className="grid">
+          <div className="sm:col-span-4">
+            <label htmlFor="website" className="block text-sm font-medium leading-6 text-gray-900">
+              Title
+            </label>
+            <div className="mt-2">
+              <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
+                <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">http://</span>
+                <input
+                  id="website"
+                  name="website"
+                  type="text"
+                  placeholder="www.example.com"
+                  className="block flex-1 border-0 bg-transparent py-1.5 pl-1 text-gray-900 placeholder:text-gray-400 focus:ring-0 sm:text-sm sm:leading-6"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div className="col-span-full">
+            <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+              Body
+            </label>
+            <div className="mt-2">
+              <textarea
+                id="about"
+                name="about"
+                rows={3}
+                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                defaultValue={''}
+              />
+            </div>
+            <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
+          </div>
+          <br />
+          <button className="border-4 p-2 hover:bg-gray-400" type="submit">
+            Submit
+          </button>
+        </div>
+
       </Form>
 
       {actionData?.errors?.title ? (
@@ -63,13 +93,13 @@ export default function Index() {
 
       {loaderData.notes.length !== 0 && (
         <div>
-          <h2 className="text-2xl">Notes</h2>
-          <ul>
+          <h2 className="text-4xl text-center mb-8">Notes</h2>
+          <ul
+            role="list"
+            className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3"
+          >
             {loaderData.notes.map((note) => (
-              <li key={note.id}>
-                <h3>{note.title}</h3>
-                <p>{note.body}</p>
-              </li>
+              <NoteCard note={note} key={note.id} />
             ))}
           </ul>
         </div>
