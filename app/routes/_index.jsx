@@ -1,8 +1,8 @@
 import { json } from "@remix-run/node";
 import { Form, useActionData, useLoaderData } from "@remix-run/react";
-import { pullErrorFromZodParsing } from "../utils/forms";
+import { pullErrorFromZodParsing } from "../utils/forms.server";
 import { readAllNotes } from "../lib/queries.server";
-import { checkNoteFormData } from "../lib/validators.server";
+import { validateNoteForm } from "../lib/validators.server";
 import { createNote } from "../lib/mutations.server";
 
 import NoteCard from "../components/NoteCard";
@@ -20,8 +20,7 @@ export async function loader() {
 }
 
 export async function action({ request }) {
-  const formData = Object.fromEntries(await request.formData());
-  const note = checkNoteFormData(formData);
+  const note = validateNoteForm(await request.formData());
 
   if (!note.success) {
     const errors = pullErrorFromZodParsing(note.error);
@@ -43,12 +42,17 @@ export default function Index() {
       <Form className="flex flex-auto space-x-4 mt-8 " method="post">
         <div className="grid">
           <div className="sm:col-span-4">
-            <label htmlFor="website" className="block text-sm font-medium leading-6 text-gray-900">
+            <label
+              htmlFor="website"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
               Title
             </label>
             <div className="mt-2">
               <div className="flex rounded-md shadow-sm ring-1 ring-inset ring-gray-300 focus-within:ring-2 focus-within:ring-inset focus-within:ring-indigo-600 sm:max-w-md">
-                <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">http://</span>
+                <span className="flex select-none items-center pl-3 text-gray-500 sm:text-sm">
+                  http://
+                </span>
                 <input
                   id="website"
                   name="website"
@@ -61,7 +65,10 @@ export default function Index() {
           </div>
 
           <div className="col-span-full">
-            <label htmlFor="about" className="block text-sm font-medium leading-6 text-gray-900">
+            <label
+              htmlFor="about"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
               Body
             </label>
             <div className="mt-2">
@@ -70,17 +77,18 @@ export default function Index() {
                 name="about"
                 rows={3}
                 className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                defaultValue={''}
+                defaultValue={""}
               />
             </div>
-            <p className="mt-3 text-sm leading-6 text-gray-600">Write a few sentences about yourself.</p>
+            <p className="mt-3 text-sm leading-6 text-gray-600">
+              Write a few sentences about yourself.
+            </p>
           </div>
           <br />
           <button className="border-4 p-2 hover:bg-gray-400" type="submit">
             Submit
           </button>
         </div>
-
       </Form>
 
       {actionData?.errors?.title ? (

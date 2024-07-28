@@ -1,8 +1,8 @@
 -- migrate:up
 create table notes(
-    id text,
-    title text,
-    body text
+    id text    PRIMARY KEY,
+    title text not null,
+    body text  not null
 )
 
 -- migrate:down

@@ -30,6 +30,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@happy-dom/global-registrator": "^14.12.3",
     "@remix-run/dev": "^2.10.3",
     "autoprefixer": "^10.4.19",
     "dbmate": "^2.19.0",
